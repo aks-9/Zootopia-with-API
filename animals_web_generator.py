@@ -55,27 +55,35 @@ def generate_animals_html(data):
         output += serialize_animal(animal_obj)
     return output
 
+def generate_not_found_html(animal_name):
+    return f'''
+    <h2 style="text-align:center; color: #b00020;">
+        The animal "{animal_name}" doesn't exist.
+    </h2>
+    '''
+
 
 def main():
-    # Load data
     animal_name = input("Enter a name of an animal: ")
+
     animals_data = fetch_animals(animal_name)
 
-    # Read template
     with open('animals_template.html', 'r') as template_file:
         html_template = template_file.read()
 
-    # Generate animal cards HTML
-    animals_info = generate_animals_html(animals_data)
+    # Handle "animal not found"
+    if not animals_data:
+        animals_info = generate_not_found_html(animal_name)
+    else:
+        animals_info = generate_animals_html(animals_data)
 
-    # Replace placeholder in template
     final_html = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_info)
 
-    # Write final HTML file
     with open('animals.html', 'w') as output_file:
         output_file.write(final_html)
 
-    print("animals.html has been created successfully!")
+    print("Website was successfully generated to the file animals.html.")
+
 
 
 if __name__ == "__main__":
