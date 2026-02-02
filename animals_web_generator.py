@@ -1,20 +1,5 @@
-import json
-import requests
 
-def fetch_animals(query):
-    """Fetch animals data from API Ninjas."""
-    url = "https://api.api-ninjas.com/v1/animals"
-    headers = {
-        "X-Api-Key": "T5lXtQQeK2SiSNcvvZWNIKs1oIhYa5RNv4EEZozI"
-    }
-    params = {
-        "name": query
-    }
-
-    response = requests.get(url, headers=headers, params=params)
-    response.raise_for_status()
-    return response.json()
-
+import data_fetcher
 
 def serialize_animal(animal_obj):
     """Serialize a single animal into an HTML <li> card."""
@@ -66,7 +51,7 @@ def generate_not_found_html(animal_name):
 def main():
     animal_name = input("Enter a name of an animal: ")
 
-    animals_data = fetch_animals(animal_name)
+    animals_data = data_fetcher.fetch_data(animal_name)
 
     with open('animals_template.html', 'r') as template_file:
         html_template = template_file.read()
