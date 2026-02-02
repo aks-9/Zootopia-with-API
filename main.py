@@ -16,12 +16,6 @@ def fetch_animals(query):
     return response.json()
 
 
-# def load_data(file_path):
-#     """Loads a JSON file and returns the data."""
-#     with open(file_path, "r") as handle:
-#         return json.load(handle)
-
-
 def serialize_animal(animal_obj):
     """Serialize a single animal into an HTML <li> card."""
     output = '<li class="cards__item">\n'
@@ -64,7 +58,8 @@ def generate_animals_html(data):
 
 def main():
     # Load data
-    animals_data = fetch_animals("fox")
+    animal_name = input("Enter a name of an animal: ")
+    animals_data = fetch_animals(animal_name)
 
     # Read template
     with open('animals_template.html', 'r') as template_file:
